@@ -1,5 +1,5 @@
 import { load } from 'ts-dotenv';
-load({
+const env = load({
   AWS_ACCESS_KEY_ID: String,
   AWS_SECRET_ACCESS_KEY: String,
   AWS_REGION: String,
@@ -15,10 +15,10 @@ import { execSync } from 'child_process';
 import AWS from 'aws-sdk';
 
 AWS.config.update({
-  region: process.env.AWS_REGION!,
+  region: env.AWS_REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
   },
 });
 
