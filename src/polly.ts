@@ -26,6 +26,16 @@ AWS.config.update({
   },
 });
 
+// Do a sneaky and convert text to ssml
+const textToSsml = (text: string) => {
+  const ssml = `<speak>${text}</speak>`.replace(
+    /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/g,
+    "<say-as interpret-as='telephone'>$0</say-as>"
+  );
+  console.debug(ssml);
+  return ssml;
+};
+
 const main = async () => {
   const { mp3, text, wav } = await argv.argv;
   const polly = new AWS.Polly();
@@ -33,7 +43,7 @@ const main = async () => {
     .synthesizeSpeech({
       OutputFormat: 'mp3',
       SampleRate: '8000',
-      Text: text,
+      Text: textToSsml(text),
       TextType: 'ssml',
       VoiceId: 'Ruth',
       Engine: 'neural',
