@@ -34,7 +34,7 @@ const main = async () => {
       OutputFormat: 'mp3',
       SampleRate: '8000',
       Text: text,
-      TextType: 'text',
+      TextType: 'ssml',
       VoiceId: 'Ruth',
       Engine: 'neural',
     })
