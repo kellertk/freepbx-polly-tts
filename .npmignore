@@ -1,0 +1,5 @@
+test
+.editorconfig
+.eslint*
+.prettier*
+tsconfig.json
