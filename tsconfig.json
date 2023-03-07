@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2021",
+    "target": "ES2016",
     "module": "commonjs",
     "declaration": true,
     "outDir": "dist",
@@ -16,7 +16,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": true
+    "strictPropertyInitialization": true,
+    "esModuleInterop": true,
   },
   "exclude": ["node_modules", "dist"]
 }
