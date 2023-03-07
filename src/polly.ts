@@ -5,8 +5,7 @@ const env = load({
   AWS_REGION: String,
 });
 import yargs from 'yargs/yargs';
-import { hideBin } from 'yargs/helpers';
-const argv = yargs(hideBin(process.argv)).options({
+const argv = yargs(process.argv).options({
   mp3: { type: 'string', demandOption: true },
   text: { type: 'string', demandOption: true },
   wav: { type: 'string', demandOption: true },
