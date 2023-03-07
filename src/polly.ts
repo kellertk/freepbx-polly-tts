@@ -1,5 +1,5 @@
 import { load } from 'ts-dotenv';
-const env = load({
+load({
   AWS_ACCESS_KEY_ID: String,
   AWS_SECRET_ACCESS_KEY: String,
   AWS_REGION: String,
@@ -10,30 +10,25 @@ const argv = yargs(process.argv).options({
   text: { type: 'string', demandOption: true },
   wav: { type: 'string', demandOption: true },
 });
-import { PollyClient, SynthesizeSpeechCommand } from '@aws-sdk/client-polly';
 import { writeFile } from 'fs/promises';
 import { execSync } from 'child_process';
+import AWS from 'aws-sdk';
 
 const main = async () => {
   const { mp3, text, wav } = await argv.argv;
-  const response = await new PollyClient({
-    region: env.AWS_REGION,
-    credentials: {
-      accessKeyId: env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
-    },
-  }).send(
-    new SynthesizeSpeechCommand({
+  const polly = new AWS.Polly();
+  const response = await polly
+    .synthesizeSpeech({
       OutputFormat: 'mp3',
+      SampleRate: '8000',
       Text: text,
       TextType: 'text',
       VoiceId: 'Ruth',
       Engine: 'neural',
-      SampleRate: '8000',
     })
-  );
-  if (response.AudioStream) {
-    const array = await response.AudioStream.transformToByteArray();
+    .promise();
+  if (response.AudioStream instanceof Buffer) {
+    const array = response.AudioStream;
     await writeFile(mp3, array);
     execSync(`lame --decode ${mp3} -b 8000 ${wav}`);
     execSync(`rm -f ${mp3}`);
