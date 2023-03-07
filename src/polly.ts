@@ -40,6 +40,8 @@ const main = async () => {
     writeFileSync(mp3, array);
     execSync(`lame --decode ${mp3} -b 8000 ${wav}.wav`);
     execSync(`rm -f ${mp3}`);
+  } else {
+    console.warn('Invalid response from AWS Polly');
   }
 };
 
