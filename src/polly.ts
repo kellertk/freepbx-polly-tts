@@ -38,7 +38,7 @@ const main = async () => {
   if (response.AudioStream instanceof Buffer) {
     const array = response.AudioStream;
     writeFileSync(mp3, array);
-    execSync(`lame --decode ${mp3} -b 8000 ${wav}`);
+    execSync(`lame --decode ${mp3} -b 8000 ${wav}.wav`);
     execSync(`rm -f ${mp3}`);
   }
 };
