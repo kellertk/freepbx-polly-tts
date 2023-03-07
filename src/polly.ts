@@ -16,7 +16,7 @@ import AWS from 'aws-sdk';
 
 const main = async () => {
   const { mp3, text, wav } = await argv.argv;
-  const polly = new AWS.Polly();
+  const polly = new AWS.Polly({ region: process.env.AWS_REGION });
   const response = await polly
     .synthesizeSpeech({
       OutputFormat: 'mp3',
