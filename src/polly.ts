@@ -10,7 +10,7 @@ const argv = yargs(process.argv).options({
   text: { type: 'string', demandOption: true },
   wav: { type: 'string', demandOption: true },
 });
-import { writeFile } from 'fs/promises';
+import { writeFileSync } from 'fs';
 import { execSync } from 'child_process';
 import AWS from 'aws-sdk';
 
@@ -29,7 +29,7 @@ const main = async () => {
     .promise();
   if (response.AudioStream instanceof Buffer) {
     const array = response.AudioStream;
-    await writeFile(mp3, array);
+    writeFileSync(mp3, array);
     execSync(`lame --decode ${mp3} -b 8000 ${wav}`);
     execSync(`rm -f ${mp3}`);
   }
