@@ -14,15 +14,16 @@ import { writeFileSync } from 'fs';
 import { execSync } from 'child_process';
 import AWS from 'aws-sdk';
 
+AWS.config.update({
+  region: process.env.AWS_REGION!,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  },
+});
+
 const main = async () => {
   const { mp3, text, wav } = await argv.argv;
-  AWS.config.update({
-    region: process.env.AWS_REGION,
-    credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-    },
-  });
   const polly = new AWS.Polly();
   const response = await polly
     .synthesizeSpeech({
