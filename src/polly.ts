@@ -1,9 +1,13 @@
 import { load } from 'ts-dotenv';
-const env = load({
-  AWS_ACCESS_KEY_ID: String,
-  AWS_SECRET_ACCESS_KEY: String,
-  AWS_REGION: String,
-});
+import { join } from 'path';
+const env = load(
+  {
+    AWS_ACCESS_KEY_ID: String,
+    AWS_SECRET_ACCESS_KEY: String,
+    AWS_REGION: String,
+  },
+  join(__dirname, '.env')
+);
 import yargs from 'yargs/yargs';
 const argv = yargs(process.argv).options({
   mp3: { type: 'string', demandOption: true },
